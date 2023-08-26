@@ -1,5 +1,8 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using SkinetAPI.Data;
+using SkinetAPI.Entities;
 
 namespace SkinetAPI.Controllers
 {
@@ -7,11 +10,20 @@ namespace SkinetAPI.Controllers
     [ApiController]
     public class ProductController : ControllerBase
     {
+        private readonly StoreContext _context;
+
+        public  ProductController(StoreContext context)
+        {
+            _context = context;
+        }
+
         [HttpGet]
         [Route("GetProducts")]
-        public string GetProducts()
+        public async Task<ActionResult<IEnumerable<Products>>> GetProducts()
         {
-            return $"this will be a product";
+          return await _context.Products.ToListAsync();
         }
+
+     
     }
 }
