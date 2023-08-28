@@ -1,8 +1,8 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Core.Entiies;
+using Infrastructure.Data;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using SkinetAPI.Data;
-using SkinetAPI.Entities;
+
 
 namespace SkinetAPI.Controllers
 {

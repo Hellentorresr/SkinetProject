@@ -1,5 +1,6 @@
+using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
-using SkinetAPI.Data;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
