@@ -2,7 +2,7 @@
 
 #nullable disable
 
-namespace SkinetAPI.Data.Migrations
+namespace Infrastructure.Data.Migrations
 {
     /// <inheritdoc />
     public partial class InitalCreate : Migration
