@@ -1,9 +1,6 @@
-﻿using Core.Entiies;
-using Infrastructure.Data;
+﻿using Core.Entities;
+using Core.Interfaces;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-
-//End section 2 update
 
 namespace SkinetAPI.Controllers
 {
@@ -11,27 +8,28 @@ namespace SkinetAPI.Controllers
     [ApiController]
     public class ProductController : ControllerBase
     {
-        private readonly StoreContext _context;
+        private readonly IProductRepository _repo;
 
-        public  ProductController(StoreContext context)
+        public  ProductController(IProductRepository repo)
         {
-            _context = context;
+            _repo = repo;
         }
 
         [HttpGet]
         [Route("GetProducts")]
-        public async Task<ActionResult<IEnumerable<Products>>> GetProducts()
+        public async Task<ActionResult<List<Products>>> GetProducts()
         {
-          return await _context.Products.ToListAsync();
+             var products = await _repo.GetProductsAsync();
+            return Ok(products);
         }
 
         [HttpGet]
         [Route("GetProductsById")]
         public async Task<ActionResult<Products>> GetProductsById(int PId)
         {
-            var product = await _context.Products.FindAsync(PId); // request is made to the store for an entity with the given primary key values and this entity, if found, is attached to the context and returned. If no entity is found in the context or the store, then null is returned.
-
+            var product = await _repo.GetProductByIdAsync(PId);
             if (product is null) return NotFound();
+
             return product;
         }
     }
