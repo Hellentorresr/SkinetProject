@@ -1,3 +1,4 @@
+using Core.Interfaces;
 using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 
@@ -11,6 +12,10 @@ builder.Services.AddControllers();
 
 //
 builder.Services.AddDbContext<StoreContext>(options => options.UseSqlServer("name=ConnectionToMySQL"));
+
+
+//Adding the interface and its implemented class as a service = repository
+builder.Services.AddScoped<IProductRepository, ProductRepository>();
 
 
 builder.Services.AddEndpointsApiExplorer();
