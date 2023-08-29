@@ -43,7 +43,9 @@ var context = services.GetRequiredService<StoreContext>();
 var logger = services.GetRequiredService<ILogger<Program>>();
 try
 {
-    await context.Database.MigrateAsync();
+    await context.Database.MigrateAsync(); //Applies any pending migrations for the database context, or
+                                           //creates the database if it does not exist. This method ensures that the
+                                           //database schema is up-to-date with the model defined by the app.
 }
 catch (Exception e)
 {
