@@ -1,3 +1,4 @@
+using Core.Interfaces;
 using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 
@@ -11,6 +12,10 @@ builder.Services.AddControllers();
 
 //
 builder.Services.AddDbContext<StoreContext>(options => options.UseSqlServer("name=ConnectionToMySQL"));
+
+
+//Adding the interface and its implemented class as a service = repository
+builder.Services.AddScoped<IProductRepository, ProductRepository>();
 
 
 builder.Services.AddEndpointsApiExplorer();
@@ -30,5 +35,19 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
+
+//
+using var scope = app.Services.CreateScope();
+var services = scope.ServiceProvider;
+var context = services.GetRequiredService<StoreContext>();
+var logger = services.GetRequiredService<ILogger<Program>>();
+try
+{
+    await context.Database.MigrateAsync();
+}
+catch (Exception e)
+{
+    logger.LogError(e, "An error occured during migrations");
+}
 
 app.Run();
