@@ -20,12 +20,42 @@ namespace Infrastructure.Data
 
         public async Task<Products> GetProductByIdAsync(int id)
         {
-            return await _context.Products.FindAsync(id);
+            return await _context.Products.
+                 Include(p => p.ProductType).
+                   Include(p => p.ProductBrand)
+                   .FirstOrDefaultAsync(p => p.Id == id);
         }
 
         public async Task<IReadOnlyList<Products>> GetProductsAsync()
         {
-            return await _context.Products.ToListAsync();
+            return await _context.Products.
+                Include(p => p.ProductType).
+                   Include(p => p.ProductBrand)
+                    .ToListAsync();//this method is the one executing the query and getting 
+            //the data back from the database
+        }
+
+
+        ///////////////////////////
+        public async Task<ProductBrand> GetBrandByIdAsync(int id)
+        {
+            return  await _context.Brands.FindAsync(id);
+        }
+
+        public async Task<IReadOnlyList<ProductBrand>> GetBrandsAsync()
+        {
+            return await _context.Brands.ToListAsync();
+        }
+
+
+        public async Task<ProductType> GetProductTypeByIdAsync(int id)
+        {
+            return await _context.ProductTypes.FindAsync(id);
+        }
+
+        public async Task<IReadOnlyList<ProductType>> GetProducTypeAsync()
+        {
+            return await _context.ProductTypes.ToListAsync();
         }
     }
 }
