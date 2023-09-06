@@ -1,5 +1,6 @@
 ﻿using Core.Entities;
 using Core.Interfaces;
+using Core.Specifications;
 using Microsoft.AspNetCore.Mvc;
 
 namespace SkinetAPI.Controllers
@@ -8,18 +9,26 @@ namespace SkinetAPI.Controllers
     [ApiController]
     public class ProductController : ControllerBase
     {
-        private readonly IProductRepository _repo;
+        private readonly IGenericRepository<Products> _productRepo;
+        private readonly IGenericRepository<ProductBrand> _productBrandRep;
+        private readonly IGenericRepository<ProductType> _productType;
 
-        public  ProductController(IProductRepository repo)
+        public  ProductController(IGenericRepository<Products> productRepo,
+            IGenericRepository<ProductBrand> productBrandRep, IGenericRepository<ProductType> productType)
         {
-            _repo = repo;
+            _productRepo = productRepo;
+            _productBrandRep = productBrandRep;
+            _productType = productType;
         }
-
+         
         [HttpGet]
         [Route("GetProducts")]
         public async Task<ActionResult<IReadOnlyList<Products>>> GetProducts()
         {
-             var products = await _repo.GetProductsAsync();
+            //
+            var specification = new ProductWithTypesAndBrandsSpecification();
+
+             var products = await _productRepo.ListAsync(specification);
              return Ok(products);
         }
 
@@ -27,10 +36,9 @@ namespace SkinetAPI.Controllers
         [Route("GetProductsById")]
         public async Task<ActionResult<Products>> GetProductsById(int PId)
         {
-            var product = await _repo.GetProductByIdAsync(PId);
-            if (product is null) return NotFound();
-
-            return product;
+            var specification = new ProductWithTypesAndBrandsSpecification(PId); //the second constructor
+            
+            return await _productRepo.GetEntityWithSpec(specification);
         }
 
         ////////////////
@@ -38,7 +46,7 @@ namespace SkinetAPI.Controllers
         [Route("GetProducTypes")]
         public async Task<ActionResult<IReadOnlyList<ProductBrand>>> GetProducTypes()
         {
-            var types = await _repo.GetProducTypeAsync();
+            var types = await _productType.ListAllAsync();
             return Ok(types);
         }
 
@@ -46,7 +54,7 @@ namespace SkinetAPI.Controllers
         [Route("GetProductBrands")]
         public async Task<ActionResult<IReadOnlyList<ProductBrand>>> GetProductBrands()
         {
-            var brands = await _repo.GetBrandsAsync();
+            var brands = await _productBrandRep.ListAllAsync();
             return Ok(brands);
         }
     }
