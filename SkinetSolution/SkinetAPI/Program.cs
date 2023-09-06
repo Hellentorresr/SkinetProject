@@ -17,6 +17,9 @@ builder.Services.AddDbContext<StoreContext>(options => options.UseSqlServer("nam
 //Adding the interface and its implemented class as a service = repository
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
 
+//
+builder.Services.AddScoped(typeof (IGenericRepository<>), typeof (GenericRepository<>));
+
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
