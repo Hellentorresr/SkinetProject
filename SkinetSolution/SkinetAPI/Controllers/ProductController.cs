@@ -42,20 +42,20 @@ namespace SkinetAPI.Controllers
         }
 
         ////////////////
-        [HttpGet]
-        [Route("GetProducTypes")]
-        public async Task<ActionResult<IReadOnlyList<ProductBrand>>> GetProducTypes()
-        {
-            var types = await _productType.ListAllAsync();
-            return Ok(types);
-        }
+        //[HttpGet]
+        //[Route("GetProducTypes")]
+        //public async Task<ActionResult<IReadOnlyList<ProductBrand>>> GetProducTypes()
+        //{
+        //    var types = await _productType.ListAllAsync();
+        //    return Ok(types);
+        //}
 
-        [HttpGet]
-        [Route("GetProductBrands")]
-        public async Task<ActionResult<IReadOnlyList<ProductBrand>>> GetProductBrands()
-        {
-            var brands = await _productBrandRep.ListAllAsync();
-            return Ok(brands);
-        }
+        //[HttpGet]
+        //[Route("GetProductBrands")]
+        //public async Task<ActionResult<IReadOnlyList<ProductBrand>>> GetProductBrands()
+        //{
+        //    var brands = await _productBrandRep.ListAllAsync();
+        //    return Ok(brands);
+        //}
     }
 }

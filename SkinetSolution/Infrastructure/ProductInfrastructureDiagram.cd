@@ -17,12 +17,12 @@
     <TypeIdentifier />
   </Class>
   <Class Name="Core.Specifications.BaseSpecification&lt;T&gt;">
-    <Position X="16" Y="3.25" Width="1.75" />
+    <Position X="16" Y="3.25" Width="3" />
     <TypeIdentifier />
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="Core.Specifications.ProductWithTypesAndBrandsSpecification">
-    <Position X="15.25" Y="5.5" Width="3.25" />
+    <Position X="16" Y="5.5" Width="3.25" />
     <TypeIdentifier />
   </Class>
   <Class Name="Infrastructure.Data.GenericRepository&lt;T&gt;" BaseTypeListCollapsed="true">

@@ -21,7 +21,7 @@ namespace Infrastructure.Data
             //using Aggregate because we're combining all of our include operations, example:
              //Include(p => p.ProductType).
              //Include(p => p.ProductBrand)
-            
+                                                 //the entity, the expression
             query = spec.Includes.Aggregate(query, (current, include) => current.Include(include));
 
             return query;
